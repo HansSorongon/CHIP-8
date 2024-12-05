@@ -13,6 +13,27 @@ public:
 
     Chip8();
 
+    void OP_00EE();
+
+    uint8_t registers[16]{};
+    uint8_t memory[4096]{};
+    uint16_t index{};
+    uint16_t pc{};
+    uint16_t stack[16]{};
+    uint8_t sp{};
+    uint8_t delayTimer{};
+    uint8_t soundTimer{};
+    uint8_t keypad[16]{};
+    uint32_t video[64 * 32]{};
+    uint16_t opcode;
+
+    std::default_random_engine rand_gen;
+    std::uniform_int_distribution<uint8_t> rand_byte;
+
+    void LoadROM(const char* filename);
+
+private: 
+
     uint8_t fontset[FONTSET_SIZE] =
     {
         0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
@@ -32,23 +53,6 @@ public:
         0xF0, 0x80, 0xF0, 0x80, 0xF0, // E
         0xF0, 0x80, 0xF0, 0x80, 0x80  // F
     };
-
-    uint8_t registers[16]{};
-    uint8_t memory[4096]{};
-    uint16_t index{};
-    uint16_t pc{};
-    uint16_t stack[16]{};
-    uint8_t sp{};
-    uint8_t delayTimer{};
-    uint8_t soundTimer{};
-    uint8_t keypad[16]{};
-    uint32_t video[64 * 32]{};
-    uint16_t opcode;
-
-    std::default_random_engine rand_gen;
-    std::uniform_int_distribution<uint8_t> rand_byte;
-
-    void LoadROM(const char* filename);
 
 };
 

@@ -36,3 +36,9 @@ void Chip8::LoadROM(const char* filename) {
 
 }
 
+// RET
+void Chip8::OP_00EE() {
+    --sp;
+    pc = stack[sp];
+}
+
