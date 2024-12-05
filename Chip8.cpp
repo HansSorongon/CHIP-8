@@ -5,7 +5,8 @@
 
 Chip8::Chip8() 
     : pc(START_ADDRESS), 
-      rand_gen(std::chrono::system_clock::now().time_since_epoch().count()) {
+      rand_gen(std::chrono::system_clock::now().time_since_epoch().count()),
+      rand_byte(0, 255) {
 
     for (unsigned int i = 0; i < FONTSET_SIZE; ++i) {
         memory[FONTSET_START_ADDRESS + i] = fontset[i];

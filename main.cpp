@@ -9,5 +9,6 @@ int main() {
     std::cout<<"Initializing CHIP-8...";
     Chip8 chip8;
 
+
     return 0;
 }
