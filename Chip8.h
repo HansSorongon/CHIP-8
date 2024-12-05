@@ -2,7 +2,7 @@
 #define CHIP8_H
 
 #include <cstdint>
-#include <fstream>
+#include <random>
 
 class Chip8 {
 public:
@@ -45,7 +45,11 @@ public:
     uint32_t video[64 * 32]{};
     uint16_t opcode;
 
+    std::default_random_engine rand_gen;
+    std::uniform_int_distribution<uint8_t> rand_byte;
+
     void LoadROM(const char* filename);
+
 };
 
 #endif

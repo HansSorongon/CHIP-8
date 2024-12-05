@@ -1,9 +1,16 @@
 #include "Chip8.h"
 
-Chip8::Chip8() : pc(START_ADDRESS) {
+#include <fstream>
+#include <chrono>
+
+Chip8::Chip8() 
+    : pc(START_ADDRESS), 
+      rand_gen(std::chrono::system_clock::now().time_since_epoch().count()) {
+
     for (unsigned int i = 0; i < FONTSET_SIZE; ++i) {
         memory[FONTSET_START_ADDRESS + i] = fontset[i];
     }
+
 };
 
 void Chip8::LoadROM(const char* filename) {
