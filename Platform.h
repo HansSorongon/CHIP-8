@@ -12,7 +12,7 @@ public:
     static const std::unordered_map<SDL_Keycode, int> key_map;
 
     void update(void const* buffer, int pitch);
-    void process_input(uint8_t* keys);
+    bool process_input(uint8_t* keys);
 
 private:
     SDL_Window* window{};

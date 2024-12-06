@@ -7,7 +7,7 @@ Platform::Platform(char const* title, int window_width, int window_height, int t
 
     SDL_Init(SDL_INIT_VIDEO);
 
-    window = SDL_CreateWindow(title, 0, 0, window_width, window_height, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, window_width, window_height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
@@ -50,37 +50,22 @@ void Platform::update(void const* buffer, int pitch) {
     SDL_RenderPresent(renderer);
 }
 
-void Platform::process_input(uint8_t* keys) {
-    bool quit = false;
-
+bool Platform::process_input(uint8_t* keys) {
     SDL_Event event;
 
     while (SDL_PollEvent(&event)) {
-
-        switch (event.type) {
-
-            case SDL_QUIT:
-                quit = true;
-                break;
-
-            case SDL_KEYDOWN:
-            case SDL_KEYUP: {
-
-                auto it = key_map.find(event.key.keysym.sym);
-                if (it != key_map.end()) {
-                    keys[it->second] = (event.type == SDL_KEYDOWN) ? 1 : 0;
-                }
-
-                if (event.key.keysym.sym == SDLK_ESCAPE && event.type == SDL_KEYDOWN) {
-                    quit = true;
-                }
-
-            } break;
-
+        if (event.type == SDL_QUIT) {
+            return true; 
         }
 
+        if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) {
+            bool isKeyDown = (event.type == SDL_KEYDOWN);
+            auto it = Platform::key_map.find(event.key.keysym.sym);
+            if (it != Platform::key_map.end()) {
+                keys[it->second] = isKeyDown ? 1 : 0;
+            }
+        }
     }
 
+    return false;
 }
-
-
